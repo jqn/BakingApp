@@ -1,6 +1,7 @@
 package io.jqn.bakingapp.ui;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.jqn.bakingapp.R;
@@ -19,11 +21,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeAdapterOnClickHandler {
     public static final String TAG = MainActivity.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecipeAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private List<RetroRecipe> mRecipes;
@@ -36,12 +38,20 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recipes_wrapper);
         // Use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        //mLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(layoutManager);
 
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+
+        mRecipes = new ArrayList<>();
+        mAdapter = new RecipeAdapter(this);
+        mAdapter.setRecipeList(mRecipes);
+        // specify an adapter
+        mRecyclerView.setAdapter(mAdapter);
 
         RetrofitRecipeService service = RetrofitClientInstance.getRetrofitInstance().create(RetrofitRecipeService.class);
         Call<List<RetroRecipe>> call = service.getRecipes();
@@ -50,10 +60,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<RetroRecipe>> call, Response<List<RetroRecipe>> response) {
                 progressDialog.dismiss();
                 mRecipes = response.body();
-                Log.v(TAG, "recipes" + mRecipes);
-                // specify an adapter
-                mAdapter = new RecipeAdapter(MainActivity.this, mRecipes);
-                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.setRecipeList(mRecipes);
             }
 
             @Override
@@ -64,15 +71,13 @@ public class MainActivity extends AppCompatActivity {
         }));
     }
 
-    /*Method to generate List of data using RecyclerView with custom adapter*/
-    //private void generateDataList(List<RetroRecipe> recipeList) {
-        //mRecyclerView = findViewById(R.id.recipes_wrapper);
+    @Override
+    public void onClick(RetroRecipe recipe) {
+        Intent intent = new Intent(this, RecipeActivity.class);
+        //intent.putExtra(RecipeActivity.RECIPE_BUNDLE_KEY, recipe);
+        startActivity(intent);
 
-        //https://medium.com/@prakash_pun/retrofit-a-simple-android-tutorial-48437e4e5a23
-    //    recyclerView = findViewById(R.id);
-    //    adapter = new CustomAdapter(this,photoList);
-    //    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-    //    recyclerView.setLayoutManager(layoutManager);
-    //    recyclerView.setAdapter(adapter);
-    //}
+    }
+
+
 }

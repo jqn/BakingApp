@@ -19,9 +19,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     private List<RetroRecipe> dataList;
     private Context context;
+    private final RecipeAdapterOnClickHandler mClickHandler;
+
+    public interface RecipeAdapterOnClickHandler {
+        void onClick(RetroRecipe recipe);
+    }
+
+    // Constructor
+    public RecipeAdapter(RecipeAdapterOnClickHandler clickHandler) {
+        //this.context = context;
+        //this.dataList = dataList;
+        mClickHandler = clickHandler;
+    }
+
 
     // Provide a reference to the views for each data item
-    class RecipeViewHolder extends RecyclerView.ViewHolder {
+    public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.recipe_icon)
         ImageView mRecipeIcon;
         @BindView(R.id.recipe_name)
@@ -29,22 +42,25 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         @BindView(R.id.recipe_servings)
         TextView mServings;
 
-        RecipeViewHolder(View itemView) {
+        public RecipeViewHolder(View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
 
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            mClickHandler.onClick(dataList.get(position));
         }
     }
 
-    // Constructor
-    public RecipeAdapter(Context context, List<RetroRecipe> dataList) {
-        this.context = context;
-        this.dataList = dataList;
-    }
 
     // Create new views
-    public RecipeAdapter.RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recipe_list_item, parent, false);
         return new RecipeViewHolder(itemView);
@@ -67,6 +83,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     // Return the size of the dataset
     @Override
     public int getItemCount() {
+        if (null == dataList) return 0;
         return dataList.size();
+    }
+
+    public void setRecipeList(List<RetroRecipe> dataList) {
+        this.dataList = dataList;
+        notifyDataSetChanged();
+
     }
 }
