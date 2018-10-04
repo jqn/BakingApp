@@ -27,8 +27,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     // Constructor
     public RecipeAdapter(RecipeAdapterOnClickHandler clickHandler) {
-        //this.context = context;
-        //this.dataList = dataList;
         mClickHandler = clickHandler;
     }
 

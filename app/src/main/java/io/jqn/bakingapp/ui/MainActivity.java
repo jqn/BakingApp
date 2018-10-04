@@ -2,6 +2,7 @@ package io.jqn.bakingapp.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.jqn.bakingapp.BuildConfig;
 import io.jqn.bakingapp.R;
 import io.jqn.bakingapp.adapter.RecipeAdapter;
 import io.jqn.bakingapp.model.RetroRecipe;
@@ -20,9 +22,12 @@ import io.jqn.bakingapp.network.RetrofitRecipeService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeAdapterOnClickHandler {
     public static final String TAG = MainActivity.class.getSimpleName();
+
+    public static final String RECIPE_BUNDLE = "RECIPE_BUNDLE";
 
     private RecyclerView mRecyclerView;
     private RecipeAdapter mAdapter;
@@ -36,9 +41,11 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Planting Timber
+        if(BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
+
         mRecyclerView = findViewById(R.id.recipes_wrapper);
         // Use a linear layout manager
-        //mLayoutManager = new LinearLayoutManager(this);
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -73,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
     @Override
     public void onClick(RetroRecipe recipe) {
-        Intent intent = new Intent(this, RecipeActivity.class);
-        //intent.putExtra(RecipeActivity.RECIPE_BUNDLE_KEY, recipe);
+        Intent intent = new Intent(this, RecipeStepsActivity.class);
+        intent.putExtra(RECIPE_BUNDLE, recipe);
         startActivity(intent);
 
     }
