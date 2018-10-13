@@ -23,7 +23,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".ui.RecipeStepsActivity"
+        <activity android:name=".ui.RecipeDetailActivity"
             android:parentActivityName=".ui.MainActivity"/>
     </application>
 

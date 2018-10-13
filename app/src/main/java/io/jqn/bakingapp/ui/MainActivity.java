@@ -2,17 +2,17 @@ package io.jqn.bakingapp.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.jqn.bakingapp.BuildConfig;
 import io.jqn.bakingapp.R;
 import io.jqn.bakingapp.adapter.RecipeAdapter;
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
     public static final String RECIPE_BUNDLE = "RECIPE_BUNDLE";
 
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.recipes_wrapper) RecyclerView mRecyclerView;
     private RecipeAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -43,8 +43,9 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
         // Planting Timber
         if(BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
+        // Bind views with ButterKnife
+        ButterKnife.bind(this);
 
-        mRecyclerView = findViewById(R.id.recipes_wrapper);
         // Use a linear layout manager
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -80,8 +81,9 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
     @Override
     public void onClick(RetroRecipe recipe) {
-        Intent intent = new Intent(this, RecipeStepsActivity.class);
-        intent.putExtra(RECIPE_BUNDLE, recipe);
+        Timber.v("Recipe sent: %s", recipe.toString());
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        intent.putExtra(RecipeDetailActivity.RECIPE_BUNDLE_KEY, recipe);
         startActivity(intent);
 
     }

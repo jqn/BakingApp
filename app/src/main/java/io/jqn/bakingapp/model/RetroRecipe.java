@@ -88,6 +88,19 @@ public class RetroRecipe implements Parcelable {
         image = in.readString();
     }
 
+
+    @Override
+    public String toString() {
+        return "{" + "\n" +
+                "recipe Id: " + getId() + "\n" +
+                "name: " + getName() + "\n" +
+                "ingrdients list size: " + getIngredients().size() + "\n" +
+                "steps list size: " + getSteps().size() + "\n" +
+                "serving: " + getServings() + "\n" +
+                "image id path: " + getImage() + "\n" +
+                "}";
+    }
+
     @Override
     public int describeContents() {return 0; }
 
