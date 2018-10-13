@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import io.jqn.bakingapp.R;
 import io.jqn.bakingapp.model.RetroRecipe;
 import timber.log.Timber;
