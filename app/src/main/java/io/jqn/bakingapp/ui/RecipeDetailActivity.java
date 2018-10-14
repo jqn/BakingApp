@@ -35,7 +35,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         //mIngredientAndStepFragment.setSelectStep(this);
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(RECIPE_BUNDLE_KEY)) {
-            mRecipe = intent.getParcelableExtra(RECIPE_BUNDLE_KEY);
+            //mRecipe = intent.getParcelableExtra(RECIPE_BUNDLE_KEY);
+            mRecipe = intent.getExtras().getParcelable(RECIPE_BUNDLE_KEY);
             Timber.d("Recipe received: %s", mRecipe.toString());
         }
 

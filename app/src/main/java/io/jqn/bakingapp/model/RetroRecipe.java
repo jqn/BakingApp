@@ -79,8 +79,10 @@ public class RetroRecipe implements Parcelable {
 
     /* Parcelable Implementation */
 
-    protected RetroRecipe(Parcel in) {
-        id = in.readInt();
+    public RetroRecipe() {}
+
+    public RetroRecipe(Parcel in) {
+        id = (Integer) in.readValue(Integer.class.getClassLoader());
         name = in.readString();
         ingredients = in.createTypedArrayList(Ingredient.CREATOR);
         steps = in.createTypedArrayList(Step.CREATOR);
@@ -114,7 +116,7 @@ public class RetroRecipe implements Parcelable {
         dest.writeString(getImage());
     }
 
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+    public static final Parcelable.Creator<RetroRecipe> CREATOR = new Parcelable.Creator<RetroRecipe>() {
         public RetroRecipe createFromParcel(Parcel source) {
             return new RetroRecipe(source);
         }
