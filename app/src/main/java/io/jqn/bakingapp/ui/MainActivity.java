@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     public void onClick(RetroRecipe recipe) {
         Timber.v("Recipe sent: %s", recipe.toString());
         Intent intent = new Intent(this, RecipeDetailActivity.class);
-        intent.putExtra(RecipeDetailActivity.RECIPE_BUNDLE_KEY, recipe);
+        intent.putExtra(RecipeDetailActivity.RECIPE_KEY, recipe);
         startActivity(intent);
 
     }

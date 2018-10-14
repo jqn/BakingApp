@@ -11,7 +11,7 @@ import io.jqn.bakingapp.model.RetroRecipe;
 import timber.log.Timber;
 
 public class RecipeDetailActivity extends AppCompatActivity {
-    public static final String RECIPE_BUNDLE_KEY = "RECIPE_KEY";
+    public static final String RECIPE_KEY = "RECIPE_KEY";
     private RetroRecipe mRecipe;
     private FragmentManager mFragmentManager;
     //private steps mIngredientAndStepsFragment;
@@ -34,16 +34,16 @@ public class RecipeDetailActivity extends AppCompatActivity {
         //mIngredientAndStepFragment = new IngredientAndStepFragment();
         //mIngredientAndStepFragment.setSelectStep(this);
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(RECIPE_BUNDLE_KEY)) {
-            //mRecipe = intent.getParcelableExtra(RECIPE_BUNDLE_KEY);
-            mRecipe = intent.getExtras().getParcelable(RECIPE_BUNDLE_KEY);
+        if (intent != null && intent.hasExtra(RECIPE_KEY)) {
+            mRecipe = intent.getParcelableExtra(RECIPE_KEY);
+            //mRecipe = intent.getExtras().getParcelable(RECIPE_BUNDLE_KEY);
             Timber.d("Recipe received: %s", mRecipe.toString());
         }
 
-        IngredientsStepsFragment headFragment = new IngredientsStepsFragment();
+        StepsFragment stepsFragment = new StepsFragment();
 
         mFragmentManager.beginTransaction()
-                .add(R.id.ingredients_and_steps_container, headFragment)
+                .add(R.id.ingredients_and_steps_container, stepsFragment)
                 .addToBackStack(null)
                 .commit();
 
