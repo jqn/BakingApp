@@ -69,7 +69,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
         RetroRecipe recipe = dataList.get(position);
         String name = recipe.getName();
-        String servings = String.valueOf(recipe.getServings());
+        String servings = String.valueOf(recipe.getServings() + " servings");
+
 
         // - get element from the dataset at this position
         // - replace the contents of the view with that element

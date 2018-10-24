@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Margins & Padding, 8 dp baseline, https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-baseline-grids -->
+    <dimen name="margin_padding_size_small">8dp</dimen>
+    <dimen name="margin_padding_size_medium">16dp</dimen>
+    <dimen name="margin_padding_size_large">24dp</dimen>
+    <dimen name="margin_padding_size_xlarge">32dp</dimen>
+    <dimen name="margin_padding_size_xxlarge">40dp</dimen>
+
+    <!-- Typography -->
+    <!-- Font sizes, https://material.io/guidelines/style/typography.html#typography-typeface -->
+    <dimen name="material_typography_overline">10sp</dimen>
+    <dimen name="material_typography_caption">12sp</dimen>
+    <dimen name="material_typography_button">14sp</dimen>
+    <dimen name="material_typography_body2">14sp</dimen>
+    <dimen name="material_typography_body1">16sp</dimen>
+    <dimen name="material_typography_subtitle2">14sp</dimen>
+    <dimen name="material_typography_subtitle1">16sp</dimen>
+    <dimen name="material_typography_h6">20sp</dimen>
+    <dimen name="material_typography_h5">24sp</dimen>
+    <dimen name="material_typography_h4">34sp</dimen>
+    <dimen name="material_typography_h3">48sp</dimen>
+    <dimen name="material_typography_h2">60sp</dimen>
+    <dimen name="material_typography_h1">96sp</dimen>
+
+</resources>
