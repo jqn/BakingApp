@@ -38,6 +38,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra(RECIPE_BUNDLE)) {
             mRecipe = intent.getExtras().getParcelable(RECIPE_BUNDLE);
             Timber.d("Recipe received: %s", mRecipe.toString());
+            actionBar.setTitle(mRecipe.getName());
         }
 
         RecipeDetailsFragment mDetailsFragment = new RecipeDetailsFragment();

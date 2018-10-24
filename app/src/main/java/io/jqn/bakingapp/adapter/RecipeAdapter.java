@@ -18,7 +18,7 @@ import io.jqn.bakingapp.model.RetroRecipe;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
     private List<RetroRecipe> dataList;
-    private Context context;
+
     private final RecipeAdapterOnClickHandler mClickHandler;
 
     public interface RecipeAdapterOnClickHandler {

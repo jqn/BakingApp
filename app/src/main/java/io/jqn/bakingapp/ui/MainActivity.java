@@ -3,6 +3,7 @@ package io.jqn.bakingapp.ui;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Baking with Panache");
 
         // Planting Timber
         if(BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
