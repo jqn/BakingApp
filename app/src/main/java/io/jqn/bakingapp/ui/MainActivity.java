@@ -1,9 +1,11 @@
 package io.jqn.bakingapp.ui;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -27,8 +29,6 @@ import timber.log.Timber;
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeAdapterOnClickHandler {
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    public static final String RECIPE_BUNDLE = "RECIPE_BUNDLE";
-
     @BindView(R.id.recipes_wrapper) RecyclerView mRecyclerView;
     private RecipeAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -50,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
+
+        // Add a divider for better readability
+        mRecyclerView.addItemDecoration(new SimplePrimaryDivider(mRecyclerView.getContext()));
 
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage("Loading...");
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     public void onClick(RetroRecipe recipe) {
         Timber.v("Recipe sent: %s", recipe.toString());
         Intent intent = new Intent(this, RecipeDetailActivity.class);
-        intent.putExtra(RecipeDetailActivity.RECIPE_BUNDLE_KEY, recipe);
+        intent.putExtra(RecipeDetailActivity.RECIPE_BUNDLE, recipe);
         startActivity(intent);
 
     }
