@@ -6,7 +6,7 @@
         android:id="@+id/recipe_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/margin_padding_size_small">
+        android:layout_marginVertical="@dimen/margin_padding_size_medium">
 
         <ImageView
             android:id="@+id/recipe_icon"
