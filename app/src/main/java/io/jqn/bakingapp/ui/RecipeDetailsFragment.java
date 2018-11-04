@@ -67,7 +67,7 @@ public class RecipeDetailsFragment extends Fragment {
             mRecipe = getActivity().getIntent().getExtras().getParcelable("RECIPE_KEY");
             Timber.v("RECIPE FRAGMENT %s", mRecipe.toString());
             Timber.v("servings %s", mRecipe.getServings());
-//            serving.setText(String.format("  %d Person's", mRecipe.getServings()));
+            serving.setText(String.format("  %d Person's", mRecipe.getServings()));
         }
 
         ingText = "";
@@ -77,7 +77,7 @@ public class RecipeDetailsFragment extends Fragment {
             i++;
         }
         Timber.v("quatity %s", ingText);
-//        serving.setText("Awesome");
+        serving.setText(ingText);
 
         return rootView;
     }

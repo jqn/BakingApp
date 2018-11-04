@@ -13,9 +13,6 @@ import timber.log.Timber;
 
 public class RecipeDetailActivity extends AppCompatActivity {
     public static final String RECIPE_BUNDLE = "RECIPE_KEY";
-    private RetroRecipe mRecipe;
-    private FragmentManager mFragmentManager;
-    private RecipeDetailsFragment mDetailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +26,20 @@ public class RecipeDetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        // Create a new recipe ingredients and steps fragment
+        RecipeDetailsFragment mDetailsFragment = new RecipeDetailsFragment();
         // Initializing Fragment manager
-        mFragmentManager = getSupportFragmentManager();
-
-        mDetailsFragment = new RecipeDetailsFragment();
+        FragmentManager mFragmentManager = getSupportFragmentManager();
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(RECIPE_BUNDLE)) {
-            mRecipe = intent.getExtras().getParcelable(RECIPE_BUNDLE);
+            RetroRecipe mRecipe = intent.getExtras().getParcelable(RECIPE_BUNDLE);
             Timber.d("Recipe received: %s", mRecipe.toString());
             actionBar.setTitle(mRecipe.getName());
         }
 
-        RecipeDetailsFragment mDetailsFragment = new RecipeDetailsFragment();
-
         mFragmentManager.beginTransaction()
-                .add(R.id.recipe_details, mDetailsFragment)
+                .add(R.id.ingredients_and_steps_container, mDetailsFragment)
                 .addToBackStack(null)
                 .commit();
 
