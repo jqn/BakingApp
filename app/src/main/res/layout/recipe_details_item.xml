@@ -28,5 +28,13 @@
         tools:text="@string/short_description"
         android:paddingBottom="@dimen/margin_padding_size_medium"/>
 
+    <ImageView
+        android:id="@+id/recipe_icon"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        app:srcCompat="@drawable/ic_ondemand_video_black_40dp"
+        android:paddingBottom="@dimen/margin_padding_size_medium"/>
+
 
 </LinearLayout>
