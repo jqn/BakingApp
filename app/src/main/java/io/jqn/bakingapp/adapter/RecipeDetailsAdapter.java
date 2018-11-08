@@ -12,10 +12,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.jqn.bakingapp.R;
 import io.jqn.bakingapp.model.Ingredient;
+import io.jqn.bakingapp.model.RetroRecipe;
+import io.jqn.bakingapp.model.Step;
 import timber.log.Timber;
 
 public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdapter.RecipeDetailsViewHolder> {
-    public List<Object> mIngredients;
+    public List<Step> mSteps;
 
     // Provide a reference to the views for each data item
     public static class RecipeDetailsViewHolder extends RecyclerView.ViewHolder {
@@ -29,8 +31,8 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
     }
 
     // provide a suitable constructor
-    public RecipeDetailsAdapter(List<Object> objects) {
-        mIngredients = objects;
+    public RecipeDetailsAdapter(List<Step> steps) {
+        mSteps = steps;
     }
 
     // create new views
@@ -51,20 +53,16 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
     // replace the contents of the view
     @Override
     public void onBindViewHolder(RecipeDetailsViewHolder holder, int position) {
-        // get element for the dataset at this position
-        // replace the contents of the view with that element
-        RecipeDetailsViewHolder ingredientViewHolder = (RecipeDetailsViewHolder) holder;
-        Ingredient ingredient = (Ingredient) mIngredients.get(position);
-        if(ingredient != null) {
-            ingredientViewHolder.mIngredient.setText("Foo");
-        }
+        Step step = mSteps.get(position);
+        Timber.v("short description %s", step.getShortDescription() );
+        holder.mIngredient.setText(step.getShortDescription());
     }
 
     // Return the size of the dataset
     @Override
     public int getItemCount() {
-        Timber.v("ingredients size %s", mIngredients.size());
-        return 0;
+        Timber.v("ingredients size %s", mSteps.size());
+        return mSteps.size();
     }
 
 

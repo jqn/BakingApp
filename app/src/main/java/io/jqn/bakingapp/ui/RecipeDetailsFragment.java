@@ -56,12 +56,6 @@ public class RecipeDetailsFragment extends Fragment {
         // use linear layout manager
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        // Initialize the list - otherwise this will throw a null reference error.
-        mDetails = new ArrayList<>();
-        // specify an adapter
-        mAdapter = new RecipeDetailsAdapter(mDetails);
-        mRecyclerView.setAdapter(mAdapter);
-
 
         if (getActivity().getIntent().hasExtra("RECIPE_KEY")) {
             mRecipe = getActivity().getIntent().getExtras().getParcelable("RECIPE_KEY");
@@ -69,14 +63,17 @@ public class RecipeDetailsFragment extends Fragment {
             Timber.v("servings %s", mRecipe.getServings());
             serving.setText(String.format("  %d Person's", mRecipe.getServings()));
         }
+        // specify an adapter
+        mAdapter = new RecipeDetailsAdapter(mRecipe.getSteps());
+        mRecyclerView.setAdapter(mAdapter);
 
         ingText = "";
         int i = 1;
         for (Ingredient ing : mRecipe.getIngredients()) {
-            ingText += "\n" + i + "- " + ing.getQuantity() + " " + ing.getMeasure() + (ing.getQuantity() > 1 ? "'s" : "") + " of " + ing.getIngredient() + "\n";
+            ingText += "\n" +  " " + ing.getQuantity() + " " + ing.getMeasure() + (ing.getQuantity() > 1 ? "'s" : "") + " of " + ing.getIngredient() + "\n";
             i++;
         }
-        Timber.v("quatity %s", ingText);
+
         serving.setText(ingText);
 
         return rootView;
