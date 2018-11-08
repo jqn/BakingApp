@@ -1,27 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recipe_details_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/detail_serving"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/recipe_details_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto"
-        android:textColor="#000000"
-        android:textSize="@dimen/material_typography_body1"
-        tools:text="@string/ingredient_dummy_text" />
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+       >
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recipe_details_list"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_serving" />
+        <TextView
+            android:id="@+id/ingredients_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ingredients_title"
+            android:textSize="@dimen/material_typography_h5"
+            android:textColor="@color/black"
+            android:paddingVertical="@dimen/margin_padding_size_small"
+            app:fontFamily="@font/roboto_regular"
+            tools:text="@string/ingredients_title" />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/material_typography_subtitle1"
+            android:textColor="@color/white"
+            android:background="@color/colorAccent"
+            android:paddingHorizontal="@dimen/margin_padding_size_small"
+            app:fontFamily="@font/roboto_regular"
+            tools:text="@string/ingredient_dummy_text" />
+
+        <TextView
+            android:id="@+id/steps_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/margin_padding_size_medium"
+            android:text="@string/steps_title"
+            android:textSize="@dimen/material_typography_h5"
+            app:fontFamily="@font/roboto_regular"
+            android:textColor="@color/black"
+            tools:text="@string/steps_title" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recipe_details_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detail_serving" />
+    </LinearLayout>
+
+
+</android.support.v4.widget.NestedScrollView>
 

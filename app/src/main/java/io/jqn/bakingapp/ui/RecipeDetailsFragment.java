@@ -21,7 +21,7 @@ import io.jqn.bakingapp.model.RetroRecipe;
 import timber.log.Timber;
 
 public class RecipeDetailsFragment extends Fragment {
-    @BindView(R.id.detail_serving)
+    @BindView(R.id.ingredients)
     TextView serving;
 
     private RecyclerView mRecyclerView;

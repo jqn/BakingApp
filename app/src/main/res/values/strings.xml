@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">BakingApp</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ingredients_title">Ingredients</string>
+    <string name="steps_title">Steps</string>
     <string name="ingredient_dummy_text">2g of Nutella</string>
     <string name="servings_label">Servings</string>
+    <string name="short_description">Prep oven</string>
 </resources>

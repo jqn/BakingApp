@@ -22,7 +22,8 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
     // Provide a reference to the views for each data item
     public static class RecipeDetailsViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string
-        @BindView(R.id.ingredient) TextView mIngredient;
+        @BindView(R.id.step_short_description) TextView mShortDescription;
+        @BindView(R.id.step_description) TextView mStepDescription;
 
         public RecipeDetailsViewHolder(View itemView) {
             super(itemView);
@@ -55,7 +56,8 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
     public void onBindViewHolder(RecipeDetailsViewHolder holder, int position) {
         Step step = mSteps.get(position);
         Timber.v("short description %s", step.getShortDescription() );
-        holder.mIngredient.setText(step.getShortDescription());
+        holder.mShortDescription.setText(step.getShortDescription());
+        holder.mStepDescription.setText(step.getDescription());
     }
 
     // Return the size of the dataset

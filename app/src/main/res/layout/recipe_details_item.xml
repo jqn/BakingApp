@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/details_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <TextView
-        android:id="@+id/ingredient"
+        android:id="@+id/step_short_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_padding_size_small"
+        android:layout_marginBottom="@dimen/margin_padding_size_small"
+        app:fontFamily="@font/roboto_regular"
+        android:textSize="@dimen/material_typography_h6"
+        tools:text="@string/short_description"
+        android:textColor="@color/white"
+        android:background="@color/colorAccent"/>
+    <TextView
+        android:id="@+id/step_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto"
-        android:textSize="@dimen/material_typography_body2"
-        tools:text="@string/ingredient_dummy_text"/>
+        app:fontFamily="@font/roboto_regular"
+        android:textSize="@dimen/material_typography_body1"
+        tools:text="@string/short_description"
+        android:paddingBottom="@dimen/margin_padding_size_medium"/>
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
