@@ -20,7 +20,7 @@ import io.jqn.bakingapp.model.Ingredient;
 import io.jqn.bakingapp.model.RetroRecipe;
 import timber.log.Timber;
 
-public class RecipeDetailsFragment extends Fragment {
+public class RecipeDetailsFragment extends Fragment implements RecipeDetailsAdapter.ListItemClickListener {
     @BindView(R.id.ingredients)
     TextView serving;
 
@@ -63,8 +63,9 @@ public class RecipeDetailsFragment extends Fragment {
             Timber.v("servings %s", mRecipe.getServings());
             serving.setText(String.format("  %d Person's", mRecipe.getServings()));
         }
-        // specify an adapter
-        mAdapter = new RecipeDetailsAdapter(mRecipe.getSteps());
+        // specify the adapter
+        // and pass in this as the ListItemClickListener to the GreenAdapter constructor
+        mAdapter = new RecipeDetailsAdapter(mRecipe.getSteps(), this);
         mRecyclerView.setAdapter(mAdapter);
 
         ingText = "";
@@ -78,4 +79,13 @@ public class RecipeDetailsFragment extends Fragment {
 
         return rootView;
     }
+
+    // Override ListItemClickListener's onListItemClick method
+    // This callback is invoked when a user clicks on an item in the list
+    @Override
+    public void onListItemClick(int clickedItemIndex) {
+        Timber.v("Clicked step %s", clickedItemIndex);
+
+    }
+
 }

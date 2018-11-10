@@ -19,8 +19,23 @@ import timber.log.Timber;
 public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdapter.RecipeDetailsViewHolder> {
     public List<Step> mSteps;
 
+    // Define an on click handler
+    private final ListItemClickListener mOnClickListener;
+
+    // Define and interface to receive onClick messages
+    public interface ListItemClickListener {
+        void onListItemClick(int clickedItemIndex);
+    }
+
+    // provide a suitable constructor and add ListItemClickListener as a parameter
+    public RecipeDetailsAdapter(List<Step> steps, ListItemClickListener listener) {
+        mSteps = steps;
+        mOnClickListener = listener;
+    }
+
     // Provide a reference to the views for each data item
-    public static class RecipeDetailsViewHolder extends RecyclerView.ViewHolder {
+    // and implement OnClickListener
+    public class RecipeDetailsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string
         @BindView(R.id.step_short_description) TextView mShortDescription;
         @BindView(R.id.step_description) TextView mStepDescription;
@@ -28,13 +43,18 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
         public RecipeDetailsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
+        }
+
+
+        // Override on click and pss the clicked item position to mOnClickListener
+        @Override
+        public void onClick(View v) {
+            int clickedPosition = getAdapterPosition();
+            mOnClickListener.onListItemClick(clickedPosition);
         }
     }
 
-    // provide a suitable constructor
-    public RecipeDetailsAdapter(List<Step> steps) {
-        mSteps = steps;
-    }
 
     // create new views
     @Override
@@ -66,6 +86,5 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
         Timber.v("ingredients size %s", mSteps.size());
         return mSteps.size();
     }
-
 
 }
