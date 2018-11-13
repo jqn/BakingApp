@@ -1,5 +1,7 @@
 package io.jqn.bakingapp.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,18 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.jqn.bakingapp.R;
-import io.jqn.bakingapp.adapter.RecipeDetailsAdapter;
+import io.jqn.bakingapp.adapter.RecipeStepsAdapter;
 import io.jqn.bakingapp.model.Ingredient;
 import io.jqn.bakingapp.model.RetroRecipe;
 import timber.log.Timber;
 
-public class RecipeDetailsFragment extends Fragment implements RecipeDetailsAdapter.ListItemClickListener {
+public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListItemClickListener {
     @BindView(R.id.ingredients)
     TextView serving;
 
@@ -33,8 +34,26 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailsAdap
 
     private String ingText;
 
+    // Define a new interface
+    OnStepClickListener mOnStepClickListener;
+
+    // OnStepClickListener interface calls a method in the host activity
+    public interface OnStepClickListener {
+        void stepSelected(int position);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mOnStepClickListener = (OnStepClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnStepClickListener");
+        }
+    }
+
     // Mandatory constructor for instantiating the fragment
-    public RecipeDetailsFragment() {
+    public StepsFragment() {
 
     }
 
@@ -47,7 +66,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailsAdap
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
         // inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.recipe_details_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.steps_fragment, container, false);
 
         // Inflate the fragment layout and set resources
         ButterKnife.bind(this, rootView);
@@ -65,7 +84,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailsAdap
         }
         // specify the adapter
         // and pass in this as the ListItemClickListener to the GreenAdapter constructor
-        mAdapter = new RecipeDetailsAdapter(mRecipe.getSteps(), this);
+        mAdapter = new RecipeStepsAdapter(mRecipe.getSteps(), this);
         mRecyclerView.setAdapter(mAdapter);
 
         ingText = "";
@@ -85,6 +104,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailsAdap
     @Override
     public void onListItemClick(int clickedItemIndex) {
         Timber.v("Clicked step %s", clickedItemIndex);
+        mOnStepClickListener.stepSelected(clickedItemIndex);
 
     }
 

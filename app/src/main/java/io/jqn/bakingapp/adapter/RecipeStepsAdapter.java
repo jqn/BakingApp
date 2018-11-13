@@ -11,12 +11,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.jqn.bakingapp.R;
-import io.jqn.bakingapp.model.Ingredient;
-import io.jqn.bakingapp.model.RetroRecipe;
 import io.jqn.bakingapp.model.Step;
 import timber.log.Timber;
 
-public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdapter.RecipeDetailsViewHolder> {
+public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.RecipeDetailsViewHolder> {
     public List<Step> mSteps;
 
     // Define an on click handler
@@ -28,7 +26,7 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
     }
 
     // provide a suitable constructor and add ListItemClickListener as a parameter
-    public RecipeDetailsAdapter(List<Step> steps, ListItemClickListener listener) {
+    public RecipeStepsAdapter(List<Step> steps, ListItemClickListener listener) {
         mSteps = steps;
         mOnClickListener = listener;
     }
@@ -58,13 +56,13 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
 
     // create new views
     @Override
-    public RecipeDetailsAdapter.RecipeDetailsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecipeStepsAdapter.RecipeDetailsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         RecipeDetailsViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         // create new view
-        View ingredientView = inflater.inflate(R.layout.recipe_details_item, parent, false);
+        View ingredientView = inflater.inflate(R.layout.steps_item, parent, false);
 
         viewHolder = new RecipeDetailsViewHolder(ingredientView);
 

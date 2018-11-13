@@ -8,10 +8,10 @@ import android.view.View;
 
 import io.jqn.bakingapp.R;
 
-public class SimplePrimaryDivider extends RecyclerView.ItemDecoration {
+public class ListDivider extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
 
-    public SimplePrimaryDivider(Context context) {
+    public ListDivider(Context context) {
         mDivider = context.getResources().getDrawable(R.drawable.divider);
     }
 
