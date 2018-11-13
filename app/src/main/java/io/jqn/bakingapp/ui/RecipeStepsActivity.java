@@ -39,10 +39,11 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
 
         // Initializing Fragment manager
         mFragmentManager = getSupportFragmentManager();
+        mDetailsFragment.setSelectStep(this);
         // create and display the steps and ingredients fragment
         mFragmentManager.beginTransaction()
                 .add(R.id.ingredients_and_steps_container, mDetailsFragment)
-                .addToBackStack(null)
+                .addToBackStack(mDetailsFragment.getClass().getName())
                 .commit();
 
     }
@@ -53,7 +54,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
         StepFragment mStepFragment = new StepFragment();
         // Create and display the step fragment
         mFragmentManager.beginTransaction()
-                .replace(R.id.step_main_container, mStepFragment)
+                .replace(R.id.ingredients_and_steps_container, mStepFragment)
                 .addToBackStack(null)
                 .commit();
     }

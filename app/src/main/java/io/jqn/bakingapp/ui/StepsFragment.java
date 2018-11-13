@@ -52,6 +52,10 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
         }
     }
 
+    public void setSelectStep(OnStepClickListener onStepClickListener) {
+        this.mOnStepClickListener = onStepClickListener;
+    }
+
     // Mandatory constructor for instantiating the fragment
     public StepsFragment() {
 
