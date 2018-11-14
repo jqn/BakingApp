@@ -6,12 +6,21 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.jqn.bakingapp.R;
+import io.jqn.bakingapp.adapter.RecipeAdapter;
+import io.jqn.bakingapp.adapter.RecipeStepsAdapter;
 import io.jqn.bakingapp.model.RetroRecipe;
+import io.jqn.bakingapp.model.Step;
 import timber.log.Timber;
 
 public class RecipeStepsActivity extends AppCompatActivity implements StepsFragment.OnStepClickListener {
     public static final String RECIPE_BUNDLE = "RECIPE_KEY";
+    public static final String RECIPE_STEP = "RECIPE_STEP";
+
+    private List<Step> mSteps;
 
     private FragmentManager mFragmentManager;
 
@@ -32,6 +41,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
             RetroRecipe mRecipe = intent.getExtras().getParcelable(RECIPE_BUNDLE);
             Timber.d("Recipe received: %s", mRecipe.toString());
             actionBar.setTitle(mRecipe.getName());
+            mSteps = mRecipe.getSteps();
         }
 
         // Create a new recipe ingredients and steps fragment
@@ -42,21 +52,27 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
         mDetailsFragment.setSelectStep(this);
         // create and display the steps and ingredients fragment
         mFragmentManager.beginTransaction()
-                .add(R.id.ingredients_and_steps_container, mDetailsFragment)
+                .add(R.id.steps_container, mDetailsFragment)
                 .addToBackStack(mDetailsFragment.getClass().getName())
                 .commit();
 
     }
 
     public void stepSelected(int position) {
-        Timber.v("Step selected %s", position);
+        Timber.v("onclick steps %s", mSteps.get(position).getDescription());
+        Timber.v("onclick steps %s", mSteps.get(position).getVideoURL());
+        Bundle args = new Bundle();
+        args.putString("DESCRIPTION", mSteps.get(position).getDescription());
+        args.putString("VIDEO", mSteps.get(position).getVideoURL());
         // Create a new step fragment
         StepFragment mStepFragment = new StepFragment();
+        mStepFragment.setArguments(args);
         // Create and display the step fragment
         mFragmentManager.beginTransaction()
-                .replace(R.id.ingredients_and_steps_container, mStepFragment)
+                .replace(R.id.steps_container, mStepFragment)
                 .addToBackStack(null)
                 .commit();
     }
+
 
 }

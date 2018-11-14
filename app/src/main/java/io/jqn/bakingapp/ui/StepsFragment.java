@@ -19,6 +19,7 @@ import io.jqn.bakingapp.R;
 import io.jqn.bakingapp.adapter.RecipeStepsAdapter;
 import io.jqn.bakingapp.model.Ingredient;
 import io.jqn.bakingapp.model.RetroRecipe;
+import io.jqn.bakingapp.model.Step;
 import timber.log.Timber;
 
 public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListItemClickListener {
@@ -107,9 +108,7 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
     // This callback is invoked when a user clicks on an item in the list
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        Timber.v("Clicked step %s", clickedItemIndex);
         mOnStepClickListener.stepSelected(clickedItemIndex);
-
     }
 
 }

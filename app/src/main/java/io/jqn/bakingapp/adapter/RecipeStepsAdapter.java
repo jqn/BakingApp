@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -72,8 +73,8 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     // replace the contents of the view
     @Override
     public void onBindViewHolder(RecipeDetailsViewHolder holder, int position) {
+        Timber.v("steps in fragment %s", mSteps);
         Step step = mSteps.get(position);
-        Timber.v("short description %s", step.getShortDescription() );
         holder.mShortDescription.setText(step.getShortDescription());
         holder.mStepDescription.setText(step.getDescription());
     }
@@ -81,7 +82,6 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     // Return the size of the dataset
     @Override
     public int getItemCount() {
-        Timber.v("ingredients size %s", mSteps.size());
         return mSteps.size();
     }
 
