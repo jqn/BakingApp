@@ -22,6 +22,7 @@ android {
 ext {
     retrofitLibVersion = "2.4.0"
     supportLibVersion = "27.1.1"
+    exoplayerVersion = "2.8.3"
 }
 
 dependencies {
@@ -36,6 +37,9 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.android.support:support-v4:27.1.1'
+    implementation "com.google.android.exoplayer:exoplayer-core:${exoplayerVersion}"
+    implementation "com.google.android.exoplayer:exoplayer-dash:${exoplayerVersion}"
+    implementation "com.google.android.exoplayer:exoplayer-ui:${exoplayerVersion}"
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

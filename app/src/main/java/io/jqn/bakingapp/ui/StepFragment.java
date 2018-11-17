@@ -1,24 +1,46 @@
 package io.jqn.bakingapp.ui;
 
-import android.support.v4.app.Fragment;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.jqn.bakingapp.R;
 import io.jqn.bakingapp.model.RetroRecipe;
-import io.jqn.bakingapp.model.Step;
 import timber.log.Timber;
 
-public class StepFragment  extends Fragment {
+public class StepFragment extends Fragment {
     private RetroRecipe mRecipe;
-    private Step mStep;
-    private List<Step> mStepList;
     private String mDescription;
+    private String mMediaUrl;
+
+    // Exoplayer
+    private SimpleExoPlayer mPlayer;
+    private long mPlaybackPosition = 0;
+    private int mCurrentWindow = 0;
+    private boolean mPlayWhenReady = true;
+
+    private Uri mUri;
+
+    @BindView(R.id.step_media)
+    PlayerView mPlayerView;
+    @BindView(R.id.step_description) TextView mTextView;
 
     // Mandatory empty constructor
     public StepFragment() {
@@ -32,6 +54,7 @@ public class StepFragment  extends Fragment {
             Timber.v("Bundle arg description %s", getArguments().getString("DESCRIPTION"));
             Timber.v("Bundle arg video %s", getArguments().getString("VIDEO"));
             mDescription = getArguments().getString("DESCRIPTION");
+            mMediaUrl = getArguments().getString("VIDEO");
         }
     }
 
@@ -42,8 +65,7 @@ public class StepFragment  extends Fragment {
         // Inflate the Step fragment layout
         View rootView = inflater.inflate(R.layout.step_fragment, container, false);
 
-        // Get a reference to the content views in the fragment layout
-        TextView mTextView = rootView.findViewById(R.id.step_description);
+        ButterKnife.bind(this, rootView);
 
         // Set the step content
         mTextView.setText(mDescription);
@@ -53,7 +75,46 @@ public class StepFragment  extends Fragment {
             mRecipe = getActivity().getIntent().getExtras().getParcelable("RECIPE_KEY");
         }
 
+        // Initialize exoplayer
+        mPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getActivity()),
+                new DefaultTrackSelector(), new DefaultLoadControl());
+
+
+        mPlayerView.setPlayer(mPlayer);
+        mPlayer.setPlayWhenReady(mPlayWhenReady);
+        mPlayer.seekTo(mCurrentWindow, mPlaybackPosition);
+
+        mUri = Uri.parse(mMediaUrl);
+
+        if (mUri != null) {
+            MediaSource mediaSource = new ExtractorMediaSource.Factory(
+                    new DefaultHttpDataSourceFactory("ExoPlayer"))
+                    .createMediaSource(mUri);
+            mPlayer.prepare(mediaSource, false, false);
+        }
         return rootView;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        releasePlayer();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        releasePlayer();
+    }
+
+    private void releasePlayer() {
+        if (mPlayer != null) {
+            mPlaybackPosition = mPlayer.getCurrentPosition();
+            mCurrentWindow = mPlayer.getCurrentWindowIndex();
+            mPlayWhenReady = mPlayer.getPlayWhenReady();
+            mPlayer.release();
+            mPlayer = null;
+        }
     }
 
 }
