@@ -68,7 +68,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
         RetroRecipe recipe = dataList.get(position);
         String name = recipe.getName();
-        String servings = String.valueOf(recipe.getServings() + " servings");
+        String servings = String.valueOf(recipe.getServings());
 
 
         // - get element from the dataset at this position
