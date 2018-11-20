@@ -7,6 +7,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
+import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
                 }
             }));
         } else {
-            Toast.makeText(MainActivity.this, "Please check your network connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, getText(R.string.network_error), Toast.LENGTH_LONG).show();
         }
 
     }
@@ -103,6 +106,5 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         startActivity(intent);
 
     }
-
 
 }

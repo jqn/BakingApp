@@ -7,33 +7,57 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
+    <TextView
+        android:id="@+id/step_description_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_padding_size_small"
+        android:layout_marginLeft="@dimen/margin_padding_size_small"
+        android:layout_marginTop="@dimen/margin_padding_size_medium"
+        android:layout_marginEnd="@dimen/margin_padding_size_small"
+        android:layout_marginRight="@dimen/margin_padding_size_small"
+        android:paddingVertical="@dimen/margin_padding_size_small"
+        app:layout_constraintBottom_toTopOf="@+id/step_media"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:textSize="@dimen/material_typography_h4"
+        app:fontFamily="@font/roboto_regular"
+        android:textColor="@color/white"
+        android:background="@color/colorAccent"/>
+d
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/step_media"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="@dimen/margin_padding_size_small"
+        android:layout_marginLeft="@dimen/margin_padding_size_small"
+        android:layout_marginEnd="@dimen/margin_padding_size_small"
+        android:layout_marginRight="@dimen/margin_padding_size_small"
         android:background="@color/black"
         app:fastforward_increment="1000"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/step_description_title"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/step_description_title"
         app:rewind_increment="1000" />
 
     <TextView
         android:id="@+id/step_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="@dimen/margin_padding_size_small"
+        android:layout_marginLeft="@dimen/margin_padding_size_small"
+        android:layout_marginTop="@dimen/margin_padding_size_large"
+        android:layout_marginEnd="@dimen/margin_padding_size_small"
+        android:layout_marginRight="@dimen/margin_padding_size_small"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/step_media" />
+        app:layout_constraintTop_toBottomOf="@+id/step_media"
+        android:textSize="@dimen/material_typography_h6"
+        app:fontFamily="@font/roboto_regular"/>
 
 </android.support.constraint.ConstraintLayout>

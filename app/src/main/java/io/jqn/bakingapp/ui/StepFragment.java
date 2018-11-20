@@ -27,6 +27,7 @@ import timber.log.Timber;
 
 public class StepFragment extends Fragment {
     private RetroRecipe mRecipe;
+    private String mShortDescription;
     private String mDescription;
     private String mMediaUrl;
 
@@ -40,6 +41,7 @@ public class StepFragment extends Fragment {
 
     @BindView(R.id.step_media)
     PlayerView mPlayerView;
+    @BindView(R.id.step_description_title) TextView mShortDescriptionView;
     @BindView(R.id.step_description) TextView mTextView;
 
     // Mandatory empty constructor
@@ -51,8 +53,7 @@ public class StepFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            Timber.v("Bundle arg description %s", getArguments().getString("DESCRIPTION"));
-            Timber.v("Bundle arg video %s", getArguments().getString("VIDEO"));
+            mShortDescription = getArguments().getString("SHORT_DESCRIPTION");
             mDescription = getArguments().getString("DESCRIPTION");
             mMediaUrl = getArguments().getString("VIDEO");
         }
@@ -68,6 +69,7 @@ public class StepFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         // Set the step content
+        mShortDescriptionView.setText(mShortDescription);
         mTextView.setText(mDescription);
         Timber.v("Setting step fragment text");
 

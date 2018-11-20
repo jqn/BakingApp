@@ -5,4 +5,6 @@
     <string name="ingredient_dummy_text">2g of Nutella</string>
     <string name="servings_label">Servings</string>
     <string name="short_description">Prep oven</string>
+    <string name="network_error">Please check your network connection</string>
+
 </resources>
