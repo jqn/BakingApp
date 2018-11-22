@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 
 import java.util.List;
 
 import io.jqn.bakingapp.R;
 import io.jqn.bakingapp.model.RetroRecipe;
 import io.jqn.bakingapp.model.Step;
-import timber.log.Timber;
 
 public class RecipeStepsActivity extends AppCompatActivity implements StepsFragment.OnStepClickListener {
     public static final String RECIPE_BUNDLE = "RECIPE_KEY";
@@ -58,13 +58,13 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
         }
 
 
-
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(RECIPE_BUNDLE, mRecipe);
+
     }
 
     @Override
@@ -91,7 +91,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
     @Override
     public boolean onSupportNavigateUp() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
-        if (count == 2 ) {
+        if (count == 2) {
             getSupportFragmentManager().popBackStack();
             return true;
         } else {
@@ -108,6 +108,5 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
             this.finish();
         }
     }
-
 
 }

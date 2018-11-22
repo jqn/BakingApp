@@ -27,7 +27,7 @@
         app:fontFamily="@font/roboto_regular"
         android:textColor="@color/white"
         android:background="@color/colorAccent"/>
-d
+
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/step_media"
         android:layout_width="match_parent"

@@ -23,6 +23,10 @@ import io.jqn.bakingapp.model.Step;
 import timber.log.Timber;
 
 public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListItemClickListener {
+
+    private static final String POSITION = "POSITION";
+    private static final String RECIPE = "RECIPE";
+
     @BindView(R.id.ingredients)
     TextView serving;
 
@@ -31,7 +35,6 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
     private RecyclerView.LayoutManager mLayoutManager;
 
     private RetroRecipe mRecipe;
-    private List<Object> mDetails;
 
     private String ingText;
 
@@ -53,18 +56,18 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
         }
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mOnStepClickListener = null;
+    }
+
     public void setSelectStep(OnStepClickListener onStepClickListener) {
         this.mOnStepClickListener = onStepClickListener;
     }
 
     // Mandatory constructor for instantiating the fragment
     public StepsFragment() {
-
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
     }
 
@@ -81,12 +84,17 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        if (getActivity().getIntent().hasExtra("RECIPE_KEY")) {
-            mRecipe = getActivity().getIntent().getExtras().getParcelable("RECIPE_KEY");
-            Timber.v("RECIPE FRAGMENT %s", mRecipe.toString());
-            Timber.v("servings %s", mRecipe.getServings());
-            serving.setText(String.format("  %d Person's", mRecipe.getServings()));
+        if (savedInstance == null) {
+            Intent intent = getActivity().getIntent();
+            if (intent != null && intent.hasExtra(RecipeStepsActivity.RECIPE_BUNDLE)) {
+                mRecipe = getActivity().getIntent().getExtras().getParcelable(RecipeStepsActivity.RECIPE_BUNDLE);
+                serving.setText(mRecipe.getServings());
+            }
+        } else {
+            mRecipe = savedInstance.getParcelable(RECIPE);
+            serving.setText(mRecipe.getServings());
         }
+
         // specify the adapter
         // and pass in this as the ListItemClickListener to the GreenAdapter constructor
         mAdapter = new RecipeStepsAdapter(mRecipe.getSteps(), this);
@@ -95,7 +103,7 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
         ingText = "";
         int i = 1;
         for (Ingredient ing : mRecipe.getIngredients()) {
-            ingText += "\n" +  " " + ing.getQuantity() + " " + ing.getMeasure() + (ing.getQuantity() > 1 ? "'s" : "") + " of " + ing.getIngredient() + "\n";
+            ingText += "\n" + " " + ing.getQuantity() + " " + ing.getMeasure() + (ing.getQuantity() > 1 ? "'s" : "") + " of " + ing.getIngredient() + "\n";
             i++;
         }
 
@@ -109,6 +117,15 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
     @Override
     public void onListItemClick(int clickedItemIndex) {
         mOnStepClickListener.stepSelected(clickedItemIndex);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Save list position
+        int position = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastVisibleItemPosition();
+        outState.putInt(POSITION, position);
+        outState.putParcelable(RECIPE, mRecipe);
     }
 
 }

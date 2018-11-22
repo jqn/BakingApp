@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
@@ -50,16 +51,23 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         // Planting Timber
         if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
 
-        // Bind views with ButterKnife
-        ButterKnife.bind(this);
+        if (findViewById(R.id.recipes_wrapper) != null) {
+            // Bind views with ButterKnife
+            ButterKnife.bind(this);
 
-        // Use a linear layout manager
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(layoutManager);
+            // Use a linear layout manager
+            LinearLayoutManager layoutManager
+                    = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            mRecyclerView.setLayoutManager(layoutManager);
 
-        // Add a divider for better readability
-        mRecyclerView.addItemDecoration(new ListDivider(mRecyclerView.getContext()));
+            // Add a divider for better readability
+            mRecyclerView.addItemDecoration(new ListDivider(mRecyclerView.getContext()));
+
+        } else {
+//            mRecyclerView = (RecyclerView) findViewById(R.id.recipes_wrapper);
+//            GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        }
+
 
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage("Loading...");
