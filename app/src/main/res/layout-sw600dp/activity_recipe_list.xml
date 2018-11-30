@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.RecipeListActivity">
 
     <android.support.v7.widget.RecyclerView
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/recipes_wrapper"
+        android:id="@+id/recipes_wrapper_tablet"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         />

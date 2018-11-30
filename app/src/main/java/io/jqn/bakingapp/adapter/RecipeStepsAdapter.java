@@ -82,6 +82,8 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     // Return the size of the dataset
     @Override
     public int getItemCount() {
+        Timber.v("steps %s", mSteps.size());
+
         return mSteps.size();
     }
 

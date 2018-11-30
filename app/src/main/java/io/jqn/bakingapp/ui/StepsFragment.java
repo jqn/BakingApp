@@ -88,11 +88,10 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
             Intent intent = getActivity().getIntent();
             if (intent != null && intent.hasExtra(RecipeStepsActivity.RECIPE_BUNDLE)) {
                 mRecipe = getActivity().getIntent().getExtras().getParcelable(RecipeStepsActivity.RECIPE_BUNDLE);
-                serving.setText(mRecipe.getServings());
+
             }
         } else {
             mRecipe = savedInstance.getParcelable(RECIPE);
-            serving.setText(mRecipe.getServings());
         }
 
         // specify the adapter

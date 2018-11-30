@@ -8,9 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Display;
-import android.view.WindowManager;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,8 +27,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeAdapterOnClickHandler {
-    public static final String TAG = MainActivity.class.getSimpleName();
+public class RecipeListActivity extends AppCompatActivity implements RecipeAdapter.RecipeAdapterOnClickHandler {
+    public static final String TAG = RecipeListActivity.class.getSimpleName();
+    private boolean mTwoPane;
+
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @BindView(R.id.recipes_wrapper)
     RecyclerView mRecyclerView;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_recipe_list);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Baking with Panache");
@@ -51,25 +51,28 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         // Planting Timber
         if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
 
+        // Check device phone/tablet
         if (findViewById(R.id.recipes_wrapper) != null) {
+            mTwoPane = false;
             // Bind views with ButterKnife
             ButterKnife.bind(this);
 
             // Use a linear layout manager
-            LinearLayoutManager layoutManager
-                    = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-            mRecyclerView.setLayoutManager(layoutManager);
+            mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            mRecyclerView.setLayoutManager(mLayoutManager);
 
             // Add a divider for better readability
             mRecyclerView.addItemDecoration(new ListDivider(mRecyclerView.getContext()));
-
         } else {
-//            mRecyclerView = (RecyclerView) findViewById(R.id.recipes_wrapper);
-//            GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
+            mTwoPane = true;
+
+            mRecyclerView = findViewById(R.id.recipes_wrapper_tablet);
+            mLayoutManager = new GridLayoutManager(this, 2);
+            mRecyclerView.setLayoutManager(mLayoutManager);
         }
 
 
-        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog = new ProgressDialog(RecipeListActivity.this);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
@@ -98,11 +101,11 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
                 @Override
                 public void onFailure(Call<List<RetroRecipe>> call, Throwable t) {
                     progressDialog.dismiss();
-                    Toast.makeText(MainActivity.this, "Something went wrong... Please try later", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RecipeListActivity.this, "Something went wrong... Please try later", Toast.LENGTH_SHORT).show();
                 }
             }));
         } else {
-            Toast.makeText(MainActivity.this, getText(R.string.network_error), Toast.LENGTH_LONG).show();
+            Toast.makeText(RecipeListActivity.this, getText(R.string.network_error), Toast.LENGTH_LONG).show();
         }
 
     }

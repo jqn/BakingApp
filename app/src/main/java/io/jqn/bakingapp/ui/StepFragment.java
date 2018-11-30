@@ -1,5 +1,6 @@
 package io.jqn.bakingapp.ui;
 
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -26,23 +26,22 @@ import io.jqn.bakingapp.model.RetroRecipe;
 import timber.log.Timber;
 
 public class StepFragment extends Fragment {
+    @BindView(R.id.step_media)
+    PlayerView mPlayerView;
+    @BindView(R.id.step_description_title)
+    TextView mShortDescriptionView;
+    @BindView(R.id.step_description)
+    TextView mTextView;
     private RetroRecipe mRecipe;
     private String mShortDescription;
     private String mDescription;
     private String mMediaUrl;
-
     // Exoplayer
     private SimpleExoPlayer mPlayer;
     private long mPlaybackPosition = 0;
     private int mCurrentWindow = 0;
     private boolean mPlayWhenReady = true;
-
     private Uri mUri;
-
-    @BindView(R.id.step_media)
-    PlayerView mPlayerView;
-    @BindView(R.id.step_description_title) TextView mShortDescriptionView;
-    @BindView(R.id.step_description) TextView mTextView;
 
     // Mandatory empty constructor
     public StepFragment() {
@@ -52,14 +51,15 @@ public class StepFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Collect our step
         if (getArguments() != null) {
             mShortDescription = getArguments().getString("SHORT_DESCRIPTION");
             mDescription = getArguments().getString("DESCRIPTION");
             mMediaUrl = getArguments().getString("VIDEO");
         }
+
     }
 
-    // Inflate fragment layout file
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
 
@@ -109,6 +109,17 @@ public class StepFragment extends Fragment {
         releasePlayer();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Timber.v("On resume %s", getResources().getConfiguration().screenWidthDp);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Timber.v("Phone orientation is landscape");
+            hideSystemUI();
+        }
+    }
+
     private void releasePlayer() {
         if (mPlayer != null) {
             mPlaybackPosition = mPlayer.getCurrentPosition();
@@ -117,6 +128,15 @@ public class StepFragment extends Fragment {
             mPlayer.release();
             mPlayer = null;
         }
+    }
+
+    private void hideSystemUI() {
+        mPlayerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
 }

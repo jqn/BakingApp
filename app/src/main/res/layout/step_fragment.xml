@@ -31,7 +31,7 @@
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/step_media"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_size_small"
         android:layout_marginLeft="@dimen/margin_padding_size_small"
         android:layout_marginEnd="@dimen/margin_padding_size_small"
