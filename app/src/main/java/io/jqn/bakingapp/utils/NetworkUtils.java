@@ -14,3 +14,4 @@ public final class NetworkUtils {
         return activeNetwork != null && activeNetwork.isConnected();
     }
 }
+

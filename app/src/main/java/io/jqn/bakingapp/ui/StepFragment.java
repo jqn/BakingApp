@@ -26,6 +26,13 @@ import io.jqn.bakingapp.model.RetroRecipe;
 import timber.log.Timber;
 
 public class StepFragment extends Fragment {
+    private static final String LAST_POSITION = "LAST_POSITION";
+    private static final String LAST_CURRENT_WINDOW = "LAST_CURRENT_WINDOW";
+    private static final String PLAY_WHEN_READY = "PLAY_WHEN_READY";
+    private static final String SHORT_DESCRIPTION = "SHORT_DESCRIPTION";
+    private static final String DESCRIPTION = "DESCRIPTION";
+    private static final String VIDEO = "VIDEO";
+
     @BindView(R.id.step_media)
     PlayerView mPlayerView;
     @BindView(R.id.step_description_title)
@@ -53,10 +60,17 @@ public class StepFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Collect our step
         if (getArguments() != null) {
-            mShortDescription = getArguments().getString("SHORT_DESCRIPTION");
-            mDescription = getArguments().getString("DESCRIPTION");
-            mMediaUrl = getArguments().getString("VIDEO");
+            Timber.v("get arguments is not null");
+            mShortDescription = getArguments().getString(SHORT_DESCRIPTION);
+            mDescription = getArguments().getString(DESCRIPTION);
+            mMediaUrl = getArguments().getString(VIDEO);
         }
+
+        if(savedInstanceState != null) {
+
+
+        }
+
 
     }
 
@@ -69,9 +83,9 @@ public class StepFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         // Set the step content
+        mShortDescriptionView.setVisibility(View.VISIBLE);
         mShortDescriptionView.setText(mShortDescription);
         mTextView.setText(mDescription);
-        Timber.v("Setting step fragment text");
 
         if (getActivity().getIntent().hasExtra("RECIPE_KEY")) {
             mRecipe = getActivity().getIntent().getExtras().getParcelable("RECIPE_KEY");
@@ -81,6 +95,11 @@ public class StepFragment extends Fragment {
         mPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getActivity()),
                 new DefaultTrackSelector(), new DefaultLoadControl());
 
+        if (savedInstance != null) {
+            mPlaybackPosition = savedInstance.getLong(LAST_POSITION);
+            mCurrentWindow = savedInstance.getInt(LAST_CURRENT_WINDOW);
+            mPlayWhenReady = savedInstance.getBoolean(PLAY_WHEN_READY);
+        }
 
         mPlayerView.setPlayer(mPlayer);
         mPlayer.setPlayWhenReady(mPlayWhenReady);
@@ -98,6 +117,21 @@ public class StepFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if(mPlayer != null) {
+            outState.putLong(LAST_POSITION, mPlayer.getCurrentPosition());
+            outState.putInt(LAST_CURRENT_WINDOW, mPlayer.getCurrentWindowIndex());
+            outState.putBoolean(PLAY_WHEN_READY, mPlayer.getPlayWhenReady());
+        } else {
+            outState.putLong(LAST_POSITION, mPlaybackPosition);
+            outState.putInt(LAST_CURRENT_WINDOW, mCurrentWindow);
+            outState.putBoolean(PLAY_WHEN_READY, mPlayWhenReady);
+        }
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         releasePlayer();
@@ -112,10 +146,10 @@ public class StepFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Timber.v("On resume %s", getResources().getConfiguration().screenWidthDp);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Timber.v("Phone orientation is landscape");
+            mShortDescriptionView.setVisibility(View.GONE);
             hideSystemUI();
         }
     }
