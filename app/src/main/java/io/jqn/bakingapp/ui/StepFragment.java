@@ -65,10 +65,11 @@ public class StepFragment extends Fragment {
             mDescription = getArguments().getString(DESCRIPTION);
             mMediaUrl = getArguments().getString(VIDEO);
         }
-
-        if(savedInstanceState != null) {
-
-
+        // Preserve video player state
+        if (savedInstanceState != null) {
+            mPlaybackPosition = savedInstanceState.getLong(LAST_POSITION);
+            mCurrentWindow = savedInstanceState.getInt(LAST_CURRENT_WINDOW);
+            mPlayWhenReady = savedInstanceState.getBoolean(PLAY_WHEN_READY);
         }
 
 
@@ -94,12 +95,6 @@ public class StepFragment extends Fragment {
         // Initialize exoplayer
         mPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getActivity()),
                 new DefaultTrackSelector(), new DefaultLoadControl());
-
-        if (savedInstance != null) {
-            mPlaybackPosition = savedInstance.getLong(LAST_POSITION);
-            mCurrentWindow = savedInstance.getInt(LAST_CURRENT_WINDOW);
-            mPlayWhenReady = savedInstance.getBoolean(PLAY_WHEN_READY);
-        }
 
         mPlayerView.setPlayer(mPlayer);
         mPlayer.setPlayWhenReady(mPlayWhenReady);
