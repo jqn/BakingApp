@@ -11,15 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.jqn.bakingapp.R;
 import io.jqn.bakingapp.adapter.RecipeStepsAdapter;
 import io.jqn.bakingapp.model.Ingredient;
 import io.jqn.bakingapp.model.RetroRecipe;
-import io.jqn.bakingapp.model.Step;
 import timber.log.Timber;
 
 public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListItemClickListener {
@@ -29,21 +26,17 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
 
     @BindView(R.id.ingredients)
     TextView serving;
-
+    // Define a new interface
+    OnStepClickListener mOnStepClickListener;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
     private RetroRecipe mRecipe;
-
     private String ingText;
 
-    // Define a new interface
-    OnStepClickListener mOnStepClickListener;
+    // Mandatory constructor for instantiating the fragment
+    public StepsFragment() {
 
-    // OnStepClickListener interface calls a method in the host activity
-    public interface OnStepClickListener {
-        void stepSelected(int position);
     }
 
     @Override
@@ -64,11 +57,6 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
 
     public void setSelectStep(OnStepClickListener onStepClickListener) {
         this.mOnStepClickListener = onStepClickListener;
-    }
-
-    // Mandatory constructor for instantiating the fragment
-    public StepsFragment() {
-
     }
 
     @Override
@@ -115,6 +103,7 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
     // This callback is invoked when a user clicks on an item in the list
     @Override
     public void onListItemClick(int clickedItemIndex) {
+        Timber.v("item index %s", clickedItemIndex);
         mOnStepClickListener.stepSelected(clickedItemIndex);
     }
 
@@ -125,6 +114,11 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
         int position = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastVisibleItemPosition();
         outState.putInt(POSITION, position);
         outState.putParcelable(RECIPE, mRecipe);
+    }
+
+    // OnStepClickListener interface calls a method in the host activity
+    public interface OnStepClickListener {
+        void stepSelected(int position);
     }
 
 }

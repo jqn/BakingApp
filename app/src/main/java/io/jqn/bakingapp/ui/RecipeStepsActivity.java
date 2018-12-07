@@ -12,6 +12,7 @@ import java.util.List;
 import io.jqn.bakingapp.R;
 import io.jqn.bakingapp.model.RetroRecipe;
 import io.jqn.bakingapp.model.Step;
+import timber.log.Timber;
 
 public class RecipeStepsActivity extends AppCompatActivity implements StepsFragment.OnStepClickListener {
     public static final String RECIPE_BUNDLE = "RECIPE_KEY";
@@ -20,6 +21,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
     private List<Step> mSteps;
     private RetroRecipe mRecipe;
     private FragmentManager mFragmentManager;
+    private StepsFragment mStepsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,28 +35,32 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+
+        // Initializing Fragment manager
+        mFragmentManager = getSupportFragmentManager();
+
+        // Create a new recipe ingredients and steps fragment
+        mStepsFragment = new StepsFragment();
+        mStepsFragment.setSelectStep(this);
+
         Intent intent = getIntent();
 
         if (savedInstanceState == null) {
             if (intent != null && intent.hasExtra(RECIPE_BUNDLE)) {
-                RetroRecipe mRecipe = intent.getExtras().getParcelable(RECIPE_BUNDLE);
+                mRecipe = intent.getExtras().getParcelable(RECIPE_BUNDLE);
                 actionBar.setTitle(mRecipe.getName());
                 mSteps = mRecipe.getSteps();
             }
-
-            // Create a new recipe ingredients and steps fragment
-            StepsFragment mDetailsFragment = new StepsFragment();
-
-            // Initializing Fragment manager
-            mFragmentManager = getSupportFragmentManager();
-            mDetailsFragment.setSelectStep(this);
             // create and display the steps and ingredients fragment
             mFragmentManager.beginTransaction()
-                    .add(R.id.steps_container, mDetailsFragment)
-                    .addToBackStack(mDetailsFragment.getClass().getName())
+                    .add(R.id.steps_container, mStepsFragment)
+                    .addToBackStack(mStepsFragment.getClass().getName())
                     .commit();
         } else {
-            mSteps = savedInstanceState.getParcelable(RECIPE_BUNDLE);
+            mRecipe = savedInstanceState.getParcelable(RECIPE_BUNDLE);
+            Timber.v("mRecipe %s", mRecipe.getName());
+            actionBar.setTitle(mRecipe.getName());
+            mSteps = mRecipe.getSteps();
         }
 
 
@@ -73,6 +79,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
     }
 
     public void stepSelected(int position) {
+        Timber.v("Step position %s", position);
         // Save steps to a bundle
         Bundle args = new Bundle();
         args.putString("SHORT_DESCRIPTION", mSteps.get(position).getShortDescription());
