@@ -70,9 +70,17 @@ public class StepFragment extends Fragment {
             if (intent != null && intent.hasExtra(RecipeStepsActivity.RECIPE_BUNDLE)) {
                 mRecipe = intent.getExtras().getParcelable(RECIPE_BUNDLE);
                 mSteps = mRecipe.getSteps();
-                mMediaUrl = mSteps.get(0).getVideoURL();
-                mShortDescription = mSteps.get(0).getShortDescription();
-                mDescription = mSteps.get(0).getDescription();
+
+                if (getArguments() != null) {
+                    mShortDescription = getArguments().getString(SHORT_DESCRIPTION);
+                    mDescription = getArguments().getString(DESCRIPTION);
+                    mMediaUrl = getArguments().getString(VIDEO);
+                } else {
+                    mMediaUrl = mSteps.get(0).getVideoURL();
+                    mShortDescription = mSteps.get(0).getShortDescription();
+                    mDescription = mSteps.get(0).getDescription();
+                }
+
             }
 
         } else {

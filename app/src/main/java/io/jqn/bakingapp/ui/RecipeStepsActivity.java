@@ -73,7 +73,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
 
                 // Create and display the step fragment
                 mFragmentManager.beginTransaction()
-                        .add(R.id.details_container, mStepFragment)
+                        .add(R.id.details_fragment_container, mStepFragment)
                         .commit();
 
             } else {
@@ -109,6 +109,8 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
     }
 
     public void stepSelected(int position) {
+        // Create a new step fragment
+        StepFragment mStepFragment = new StepFragment();
         if (mTwoPane == false) {
 
             Timber.v("Step position %s", position);
@@ -117,8 +119,6 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
             args.putString("SHORT_DESCRIPTION", mSteps.get(position).getShortDescription());
             args.putString("DESCRIPTION", mSteps.get(position).getDescription());
             args.putString("VIDEO", mSteps.get(position).getVideoURL());
-            // Create a new step fragment
-            StepFragment mStepFragment = new StepFragment();
             mStepFragment.setArguments(args);
 
 
@@ -127,7 +127,20 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
                     .replace(R.id.steps_container, mStepFragment)
                     .addToBackStack(null)
                     .commit();
+        } else {
+            // Save steps to a bundle
+            Bundle args = new Bundle();
+            args.putString("SHORT_DESCRIPTION", mSteps.get(position).getShortDescription());
+            args.putString("DESCRIPTION", mSteps.get(position).getDescription());
+            args.putString("VIDEO", mSteps.get(position).getVideoURL());
+            mStepFragment.setArguments(args);
+
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.details_fragment_container, mStepFragment)
+                    .commit();
         }
+
+
 
     }
 
