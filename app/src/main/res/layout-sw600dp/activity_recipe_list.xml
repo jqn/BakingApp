@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/margin_padding_size_small"
     tools:context=".ui.RecipeListActivity">
 
     <android.support.v7.widget.RecyclerView

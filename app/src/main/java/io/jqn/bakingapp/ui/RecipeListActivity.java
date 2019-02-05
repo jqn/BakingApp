@@ -29,6 +29,8 @@ import timber.log.Timber;
 
 public class RecipeListActivity extends AppCompatActivity implements RecipeAdapter.RecipeAdapterOnClickHandler {
     public static final String TAG = RecipeListActivity.class.getSimpleName();
+    // Track whether to display a two-pane or single-pane UI
+    // A single-pane display refers to phone screens, and two-pane to larger tablet screens
     private boolean mTwoPane;
 
     private RecyclerView.LayoutManager mLayoutManager;

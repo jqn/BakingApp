@@ -1,5 +1,6 @@
 package io.jqn.bakingapp.ui;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,13 +20,17 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.jqn.bakingapp.R;
 import io.jqn.bakingapp.model.RetroRecipe;
+import io.jqn.bakingapp.model.Step;
 import timber.log.Timber;
 
 public class StepFragment extends Fragment {
+    public static final String RECIPE_BUNDLE = "RECIPE_KEY";
     private static final String LAST_POSITION = "LAST_POSITION";
     private static final String LAST_CURRENT_WINDOW = "LAST_CURRENT_WINDOW";
     private static final String PLAY_WHEN_READY = "PLAY_WHEN_READY";
@@ -40,6 +45,7 @@ public class StepFragment extends Fragment {
     @BindView(R.id.step_description)
     TextView mTextView;
     private RetroRecipe mRecipe;
+    private List<Step> mSteps;
     private String mShortDescription;
     private String mDescription;
     private String mMediaUrl;
@@ -58,13 +64,27 @@ public class StepFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Collect our step
-        if (getArguments() != null) {
-            Timber.v("get arguments is not null");
-            mShortDescription = getArguments().getString(SHORT_DESCRIPTION);
-            mDescription = getArguments().getString(DESCRIPTION);
-            mMediaUrl = getArguments().getString(VIDEO);
+
+        if (getResources().getConfiguration().smallestScreenWidthDp >= 600) {
+            Intent intent = getActivity().getIntent();
+            if (intent != null && intent.hasExtra(RecipeStepsActivity.RECIPE_BUNDLE)) {
+                mRecipe = intent.getExtras().getParcelable(RECIPE_BUNDLE);
+                mSteps = mRecipe.getSteps();
+                mMediaUrl = mSteps.get(0).getVideoURL();
+                mShortDescription = mSteps.get(0).getShortDescription();
+                mDescription = mSteps.get(0).getDescription();
+            }
+
+        } else {
+            // Collect our step
+            if (getArguments() != null) {
+                Timber.v("get arguments is not null");
+                mShortDescription = getArguments().getString(SHORT_DESCRIPTION);
+                mDescription = getArguments().getString(DESCRIPTION);
+                mMediaUrl = getArguments().getString(VIDEO);
+            }
         }
+
         // Preserve video player state
         if (savedInstanceState != null) {
             mPlaybackPosition = savedInstanceState.getLong(LAST_POSITION);
@@ -74,7 +94,7 @@ public class StepFragment extends Fragment {
 
 
     }
-
+    // Inflates the fragment layout and sets any required resources
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
 

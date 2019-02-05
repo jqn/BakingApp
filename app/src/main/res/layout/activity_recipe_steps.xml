@@ -15,11 +15,4 @@
         android:layout_marginHorizontal="@dimen/margin_padding_size_medium"
         />
 
-    <FrameLayout
-        android:id="@+id/step_main_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_padding_size_medium"
-        />
-
 </LinearLayout>
