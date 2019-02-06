@@ -1,6 +1,9 @@
 package io.jqn.bakingapp.ui;
 
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
@@ -9,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.List;
 
 import io.jqn.bakingapp.R;
+import io.jqn.bakingapp.RecipeWidgetProvider;
 import io.jqn.bakingapp.model.RetroRecipe;
 import io.jqn.bakingapp.model.Step;
 import timber.log.Timber;
@@ -92,6 +96,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsFragm
             actionBar.setTitle(mRecipe.getName());
             mSteps = mRecipe.getSteps();
         }
+
 
 
     }

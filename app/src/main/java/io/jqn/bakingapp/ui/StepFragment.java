@@ -170,11 +170,15 @@ public class StepFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Timber.v("Phone orientation is landscape");
-            mShortDescriptionView.setVisibility(View.GONE);
-            hideSystemUI();
+
+        if (getResources().getConfiguration().smallestScreenWidthDp <= 600) {
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                Timber.v("Phone orientation is landscape");
+                mShortDescriptionView.setVisibility(View.GONE);
+                hideSystemUI();
+            }
         }
+
     }
 
     private void releasePlayer() {

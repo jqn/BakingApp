@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent" android:layout_height="match_parent"
+android:id="@+id/widget_layout"
+android:padding="@dimen/widget_margin"
+android:background="@color/colorPrimary">
+
+<TextView
+    android:id="@+id/appwidget_text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:text="@string/app_name"
+    android:textColor="@android:color/white"
+    android:background="@color/colorPrimary"
+    android:textSize="@dimen/material_typography_h4"
+    android:padding="@dimen/margin_padding_size_small"
+    android:contentDescription="@string/app_name"/>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/appwidget_text"
+    android:background="@color/colorAccent">
+
+    <TextView
+        android:id="@+id/widget_title"
+        android:textSize="@dimen/material_typography_h5"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/margin_padding_size_small"
+        android:layout_marginLeft="@dimen/margin_padding_size_small"
+        tools:text="Recipe Name"
+        tools:fontFamily="sans-serif"
+        android:fontFamily="@font/roboto_regular"/>
+
+    <TextView
+        android:id="@+id/widget_ingredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/widget_title"
+        android:layout_marginTop="@dimen/margin_padding_size_small"
+        android:layout_marginLeft="@dimen/margin_padding_size_small"
+        android:layout_marginRight="@dimen/margin_padding_size_small"
+        android:layout_marginBottom="@dimen/margin_padding_size_small"
+        android:hyphenationFrequency="full"
+        android:textSize="@dimen/material_typography_body1"
+        android:textColor="@color/white"
+        android:lineSpacingMultiplier="1.15"/>
+
+</RelativeLayout>
+
+
+</RelativeLayout>

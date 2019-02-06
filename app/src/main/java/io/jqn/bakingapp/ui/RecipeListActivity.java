@@ -1,7 +1,11 @@
 package io.jqn.bakingapp.ui;
 
 import android.app.ProgressDialog;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.jqn.bakingapp.BuildConfig;
 import io.jqn.bakingapp.R;
+import io.jqn.bakingapp.RecipeWidgetProvider;
 import io.jqn.bakingapp.adapter.RecipeAdapter;
 import io.jqn.bakingapp.model.RetroRecipe;
 import io.jqn.bakingapp.network.RetrofitClientInstance;
@@ -32,6 +37,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeAdapt
     // Track whether to display a two-pane or single-pane UI
     // A single-pane display refers to phone screens, and two-pane to larger tablet screens
     private boolean mTwoPane;
+    private RetroRecipe mRecipe;
 
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -109,6 +115,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeAdapt
         } else {
             Toast.makeText(RecipeListActivity.this, getText(R.string.network_error), Toast.LENGTH_LONG).show();
         }
+
 
     }
 

@@ -1,10 +1,15 @@
 <resources>
-    <string name="app_name">BakingApp</string>
+    <string name="app_name">Baking Time</string>
     <string name="ingredients_title">Ingredients</string>
     <string name="steps_title">Steps</string>
     <string name="ingredient_dummy_text">2g of Nutella</string>
     <string name="servings_label">Servings</string>
     <string name="short_description">Prep oven</string>
     <string name="network_error">Please check your network connection</string>
+    <string name="appwidget_ingredients">Brownies</string>
+    <string name="add_widget">Add widget</string>
+    <string name="preferences_name">widget_preferences</string>
+    <string name="recipe_title">Recipe</string>
+    <string name="recipe_ingredients">Ingredients</string>
 
 </resources>

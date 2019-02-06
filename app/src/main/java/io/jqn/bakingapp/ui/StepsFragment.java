@@ -1,7 +1,9 @@
 package io.jqn.bakingapp.ui;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -77,6 +79,7 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
             if (intent != null && intent.hasExtra(RecipeStepsActivity.RECIPE_BUNDLE)) {
                 mRecipe = getActivity().getIntent().getExtras().getParcelable(RecipeStepsActivity.RECIPE_BUNDLE);
 
+
             }
         } else {
             mRecipe = savedInstance.getParcelable(RECIPE);
@@ -95,6 +98,17 @@ public class StepsFragment extends Fragment implements RecipeStepsAdapter.ListIt
         }
 
         serving.setText(ingText);
+
+
+        // Save selected recipe for widget to use
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(getString(R.string.preferences_name), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(getString(R.string.recipe_title), mRecipe.getName());
+        editor.putString(getString(R.string.recipe_ingredients), ingText);
+        editor.commit();
+        // let the widget know it needs to update
+        Intent widgetIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        getContext().sendBroadcast(widgetIntent);
 
         return rootView;
     }
